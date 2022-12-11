@@ -1,0 +1,25 @@
+version: "3"
+services:
+  application:
+    image: javaexpress/springboot-restapi-mysql
+    restart : on-failure
+    ports:
+      - "8081:8080"
+    networks:
+      - javaexpress-springboot-network
+    depends_on:
+      - mysqldatabase    
+  mysqldatabase:
+    image: mysql:5.7
+    networks:
+      - javaexpress-springboot-network
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=devdb
+      - MYSQL_TCP_PORT=3307
+    ports:
+      - "3307:3307"
+    volumes:
+      - /var/lib/mysql
+networks:
+  javaexpress-springboot-network:
